@@ -1,6 +1,6 @@
 # @wpiyaphon/gm-poc-package
 
-A React component library with a customizable Button component.
+A React component library with a customizable Button component built with TypeScript.
 
 ## Installation
 
@@ -14,9 +14,9 @@ yarn add @wpiyaphon/gm-poc-package
 
 ### Button Component
 
-The Button component is a customizable button that can be used in your React applications. It's implemented as a React functional component with JSX.
+The Button component is a customizable button that can be used in your React applications. It's implemented as a React functional component with TypeScript.
 
-```jsx
+```tsx
 import { Button } from "@wpiyaphon/gm-poc-package";
 
 function App() {
@@ -52,6 +52,24 @@ function App() {
 | onClick   | function                              | -         | Function called when the button is clicked    |
 | children  | ReactNode                             | -         | The content of the button                     |
 | className | string                                | ''        | Additional CSS classes to apply to the button |
+
+### TypeScript Support
+
+This package is written in TypeScript and provides type definitions. You can import the types directly:
+
+```tsx
+import {
+  Button,
+  ButtonProps,
+  ButtonVariant,
+  ButtonSize,
+} from "@wpiyaphon/gm-poc-package";
+
+// Use the types in your code
+const MyButton: React.FC<ButtonProps> = (props) => {
+  return <Button {...props} />;
+};
+```
 
 ## License
 

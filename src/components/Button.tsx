@@ -1,18 +1,41 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ButtonHTMLAttributes, ReactNode } from "react";
+
+export type ButtonVariant = "primary" | "secondary" | "outline";
+export type ButtonSize = "small" | "medium" | "large";
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * The visual style of the button
+   */
+  variant?: ButtonVariant;
+  /**
+   * The size of the button
+   */
+  size?: ButtonSize;
+  /**
+   * Whether the button is disabled
+   */
+  disabled?: boolean;
+  /**
+   * Function called when the button is clicked
+   */
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  /**
+   * The content of the button
+   */
+  children?: ReactNode;
+  /**
+   * Additional CSS classes to apply to the button
+   */
+  className?: string;
+}
 
 /**
  * A customizable button component
- * @param {Object} props - Component props
- * @param {string} props.variant - Button variant (primary, secondary, outline)
- * @param {string} props.size - Button size (small, medium, large)
- * @param {boolean} props.disabled - Whether the button is disabled
- * @param {Function} props.onClick - Click event handler
- * @param {React.ReactNode} props.children - Button content
- * @param {string} props.className - Additional CSS classes
- * @returns {React.ReactElement} Button component
+ * @param props - Component props
+ * @returns Button component
  */
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   size = "medium",
   disabled = false,
@@ -21,7 +44,7 @@ const Button = ({
   className = "",
   ...rest
 }) => {
-  const baseStyles = {
+  const baseStyles: React.CSSProperties = {
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
@@ -33,32 +56,23 @@ const Button = ({
     outline: "none",
   };
 
-  const variantStyles = {
+  const variantStyles: Record<ButtonVariant, React.CSSProperties> = {
     primary: {
       backgroundColor: "#3b82f6",
       color: "white",
-      "&:hover": {
-        backgroundColor: "#2563eb",
-      },
     },
     secondary: {
       backgroundColor: "#6b7280",
       color: "white",
-      "&:hover": {
-        backgroundColor: "#4b5563",
-      },
     },
     outline: {
       backgroundColor: "transparent",
       border: "1px solid #3b82f6",
       color: "#3b82f6",
-      "&:hover": {
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
-      },
     },
   };
 
-  const sizeStyles = {
+  const sizeStyles: Record<ButtonSize, React.CSSProperties> = {
     small: {
       padding: "6px 12px",
       fontSize: "14px",
@@ -73,7 +87,7 @@ const Button = ({
     },
   };
 
-  const buttonStyles = {
+  const buttonStyles: React.CSSProperties = {
     ...baseStyles,
     ...variantStyles[variant],
     ...sizeStyles[size],
@@ -91,15 +105,6 @@ const Button = ({
       {children}
     </button>
   );
-};
-
-Button.propTypes = {
-  variant: PropTypes.oneOf(["primary", "secondary", "outline"]),
-  size: PropTypes.oneOf(["small", "medium", "large"]),
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-  children: PropTypes.node,
-  className: PropTypes.string,
 };
 
 export default Button;
