@@ -14,7 +14,7 @@ yarn add @wpiyaphon/gm-poc-package
 
 ### Button Component
 
-The Button component is a customizable button that can be used in your React applications.
+The Button component is a customizable button that can be used in your React applications. It's implemented as a React functional component with JSX.
 
 ```jsx
 import { Button } from "@wpiyaphon/gm-poc-package";
