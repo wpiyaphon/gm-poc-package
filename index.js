@@ -1,5 +1,2 @@
-function helloWorld() {
-  return "Hello from my-awesome-package!";
-}
-
-module.exports = { helloWorld };
+// Export the Button component
+export { Button } from "./src/components";
