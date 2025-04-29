@@ -1,76 +1,105 @@
-# @wpiyaphon/gm-poc-package
+# 🧩 GM POC Package
 
-A React component library with a customizable Button component built with TypeScript.
+A CLI tool to scaffold customizable React UI components into your project — inspired by [shadcn/ui](https://github.com/shadcn-ui/ui), but simplified and customizable.
 
-## Installation
+## ✨ Features
+
+- 🚀 Quick component scaffolding
+- 🎨 Customizable component templates
+- 🔧 TypeScript support
+- 🎯 Flexible target directory configuration
+
+## 🔐 Installation (Private Package)
+
+Since this package is private and hosted on GitHub Packages, you need to configure your `.npmrc` file:
+
+1. Create or update your `.npmrc` file in your project root:
+
+   ```bash
+   touch .npmrc
+   ```
+
+2. Add the following to `.npmrc`:
+
+   ```bash
+   @wpiyaphon:registry=https://npm.pkg.github.com/
+   //npm.pkg.github.com/:_authToken=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
+   ```
+
+3. Install the package using your preferred package manager:
+
+   ```bash
+   # Using npm
+   npm install -D @wpiyaphon/gm-poc-package
+
+   # Using yarn
+   yarn add -D @wpiyaphon/gm-poc-package
+
+   # Using pnpm
+   pnpm add -D @wpiyaphon/gm-poc-package
+   ```
+
+## 🚀 Usage
+
+### Adding Components
+
+Add a UI component using the CLI:
 
 ```bash
-npm install @wpiyaphon/gm-poc-package
-# or
-yarn add @wpiyaphon/gm-poc-package
+hongcn add button
 ```
 
-## Usage
+This will generate the component in the default location:
 
-### Button Component
-
-The Button component is a customizable button that can be used in your React applications. It's implemented as a React functional component with TypeScript.
-
-```tsx
-import { Button } from "@wpiyaphon/gm-poc-package";
-
-function App() {
-  return (
-    <div>
-      <Button
-        variant="primary"
-        size="medium"
-        onClick={() => alert("Button clicked!")}
-      >
-        Click Me
-      </Button>
-
-      <Button variant="secondary" size="large" disabled>
-        Disabled Button
-      </Button>
-
-      <Button variant="outline" size="small">
-        Small Outline Button
-      </Button>
-    </div>
-  );
-}
+```bash
+src/components/ui/button.tsx
 ```
 
-### Props
+### Custom Target Directory
 
-| Prop      | Type                                  | Default   | Description                                   |
-| --------- | ------------------------------------- | --------- | --------------------------------------------- |
-| variant   | 'primary' \| 'secondary' \| 'outline' | 'primary' | The visual style of the button                |
-| size      | 'small' \| 'medium' \| 'large'        | 'medium'  | The size of the button                        |
-| disabled  | boolean                               | false     | Whether the button is disabled                |
-| onClick   | function                              | -         | Function called when the button is clicked    |
-| children  | ReactNode                             | -         | The content of the button                     |
-| className | string                                | ''        | Additional CSS classes to apply to the button |
+You can specify a custom target directory for component generation:
 
-### TypeScript Support
-
-This package is written in TypeScript and provides type definitions. You can import the types directly:
-
-```tsx
-import {
-  Button,
-  ButtonProps,
-  ButtonVariant,
-  ButtonSize,
-} from "@wpiyaphon/gm-poc-package";
-
-// Use the types in your code
-const MyButton: React.FC<ButtonProps> = (props) => {
-  return <Button {...props} />;
-};
+```bash
+hongcn add button --target src/shared/ui
 ```
 
-## License
+### Available Components
+
+Currently available components:
+
+- `button` - A customizable button component
+
+## 📁 Project Structure
+
+```bash
+gm-poc-package/
+├── src/              # Source code
+│   └── index.ts      # CLI entry point
+├── templates/        # Component templates
+│   └── button.tsx    # Button component template
+├── dist/            # Compiled output
+├── .npmrc           # NPM configuration
+├── package.json     # Project configuration
+└── README.md        # Documentation
+```
+
+## 🔧 Development
+
+### Prerequisites
+
+- Node.js >= 16.8.0
+- npm, yarn, or pnpm
+
+### Scripts
+
+```bash
+# Run CLI in development mode
+npm run dev
+
+# Build the package
+npm run build
+```
+
+## 📝 License
 
 ISC
