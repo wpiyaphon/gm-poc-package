@@ -4,8 +4,12 @@ import { Command } from "commander";
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 // ----------------------------------------------------------------------
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const TEMPLATE_DIR = path.resolve(__dirname, "../templates");
 const DEFAULT_TARGET_DIR = "src/components/ui";
