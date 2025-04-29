@@ -1,16 +1,18 @@
 {
   "name": "@wpiyaphon/gm-poc-package",
-  "version": "1.2.0",
-  "main": "index.ts",
-  "module": "index.ts",
-  "types": "index.ts",
+  "version": "1.2.1",
+  "description": "A CLI to add customizable React components to your project",
+  "bin": {
+    "hongcn": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist",
     "templates"
   ],
-  "bin": {
-    "hongcn": "dist/index.js"
-  },
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsup src/index.ts --format esm,cjs --dts"
@@ -22,9 +24,7 @@
     "ui",
     "typescript"
   ],
-  "author": "",
   "license": "ISC",
-  "description": "A React component library with a customizable Button component",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
