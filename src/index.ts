@@ -9,9 +9,8 @@ import { fileURLToPath } from "url";
 // ----------------------------------------------------------------------
 
 const filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
 
-const TEMPLATE_DIR = path.resolve(dirname, "../templates");
+const TEMPLATE_DIR = path.resolve(path.dirname(filename), "../templates");
 const DEFAULT_TARGET_DIR = "src/components/ui";
 
 // ----------------------------------------------------------------------
