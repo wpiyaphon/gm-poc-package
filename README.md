@@ -46,7 +46,7 @@ Since this package is private and hosted on GitHub Packages, you need to configu
 Add a UI component using the CLI:
 
 ```bash
-hongcn add button
+pnpm dlx @wpiyaphon/gm-poc-package add button
 ```
 
 This will generate the component in the default location:
@@ -60,7 +60,7 @@ src/components/ui/button.tsx
 You can specify a custom target directory for component generation:
 
 ```bash
-hongcn add button --target src/shared/ui
+pnpm dlx @wpiyaphon/gm-poc-package add button --target src/shared/ui
 ```
 
 ### Available Components
