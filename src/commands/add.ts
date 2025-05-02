@@ -1,9 +1,12 @@
 import { Command } from "commander";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import fs from "fs";
-import chalk from "chalk";
 import { z } from "zod";
+import { logger } from "../utils/logger";
+import { updateDependencies } from "../utils/updaters/update-dependencies";
+import { spinner } from "../utils/spinner";
+import { dependencies } from "../utils/updaters/dependencies";
 
 // ----------------------------------------------------------------------
 
@@ -15,6 +18,7 @@ export const addOptionsSchema = z.object({
   overwrite: z.boolean(),
   source: z.string(),
   target: z.string(),
+  cwd: z.string(),
 });
 
 // ----------------------------------------------------------------------
@@ -24,9 +28,15 @@ export const add = new Command()
   .description("Add a UI component")
   .option("-o, --overwrite", "overwrite existing files.", false)
   .option("-t, --target <target>", "Target folder", DEFAULT_TARGET_DIR)
-  .action((component, opts) => {
+  .option(
+    "-c, --cwd <cwd>",
+    "the working directory. defaults to the current directory.",
+    process.cwd()
+  )
+  .action(async (component, opts) => {
     const options = addOptionsSchema.parse({
       component,
+      cwd: path.resolve(opts.cwd),
       source: path.resolve(path.dirname(FILENAME), "../templates"),
       target: path.resolve(opts?.target || DEFAULT_TARGET_DIR),
       overwrite: opts?.overwrite || false,
@@ -39,9 +49,7 @@ export const add = new Command()
     );
 
     if (!fs.existsSync(sourcePath)) {
-      console.error(
-        chalk.red(`❌ Component '${component}' not found in templates.`)
-      );
+      logger.error(`Component '${component}' not found in templates.`);
       process.exit(1);
     }
 
@@ -52,34 +60,30 @@ export const add = new Command()
 
     // Check if component already exists
     if (fs.existsSync(targetPath) && !options.overwrite) {
-      console.error(
-        `❌ ${component}.tsx already exists. Use --overwrite to replace it.`
+      logger.error(
+        `${component}.tsx already exists. Use --overwrite to replace it.`
       );
       process.exit(1);
     }
 
+    // Update dependencies
+    await updateDependencies(component, options.cwd);
+
     // Overwrite existing file
     if (options.overwrite) {
       fs.writeFileSync(targetPath, sourcePath);
-      console.log(
-        chalk.green(
-          `✅ ${component}.tsx overwritten at ${path.relative(
-            process.cwd(),
-            targetPath
-          )}`
-        )
-      );
+      spinner(
+        `Overwritten ${component}.tsx at ${path.relative(
+          process.cwd(),
+          targetPath
+        )}`
+      )?.succeed();
       process.exit(1);
     }
 
     // Copy template
     fs.copyFileSync(sourcePath, targetPath);
-    console.log(
-      chalk.green(
-        `✅ ${component}.tsx created at ${path.relative(
-          process.cwd(),
-          targetPath
-        )}`
-      )
-    );
+    spinner(
+      `Created ${component}.tsx at ${path.relative(process.cwd(), targetPath)}`
+    )?.succeed();
   });
