@@ -1,3 +1,4 @@
+import MuiButton from "@mui/material/Button";
 import React, { ButtonHTMLAttributes, ReactNode } from "react";
 
 export type ButtonVariant = "primary" | "secondary" | "outline";
@@ -42,7 +43,6 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   children,
   className = "",
-  ...rest
 }) => {
   const baseStyles: React.CSSProperties = {
     display: "inline-flex",
@@ -95,15 +95,14 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <button
+    <MuiButton
       style={buttonStyles}
       disabled={disabled}
       onClick={onClick}
       className={className}
-      {...rest}
     >
       {children}
-    </button>
+    </MuiButton>
   );
 };
 
