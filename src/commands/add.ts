@@ -71,13 +71,15 @@ export const add = new Command()
 
     // Overwrite existing file
     if (options.overwrite) {
-      fs.writeFileSync(targetPath, sourcePath);
-      spinner(
+      const overwriteSpinner = spinner(
         `Overwritten ${component}.tsx at ${path.relative(
           process.cwd(),
           targetPath
         )}`
-      )?.succeed();
+      )?.start();
+      const componentContent = fs.readFileSync(sourcePath, "utf-8");
+      fs.writeFileSync(targetPath, componentContent);
+      overwriteSpinner?.succeed();
       process.exit(1);
     }
 

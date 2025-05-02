@@ -4,7 +4,7 @@ import { spinner } from "../spinner";
 import { dependencies as dependenciesMap } from "./dependencies";
 
 export async function updateDependencies(component: string, cwd: string) {
-  const dependenciesSpinner = spinner(`Installing dependencies.`)?.start();
+  const dependenciesSpinner = spinner(`Installing dependencies`)?.start();
 
   const packageManager = await getPackageManager(cwd);
 
