@@ -1,12 +1,11 @@
 import { Command } from "commander";
-import fs from "fs";
+import fs, { promises as fsPromises } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { z } from "zod";
 import { logger } from "../utils/logger";
-import { updateDependencies } from "../utils/updaters/update-dependencies";
 import { spinner } from "../utils/spinner";
-import { dependencies } from "../utils/updaters/dependencies";
+import { updateDependencies } from "../utils/updaters/update-dependencies";
 
 // ----------------------------------------------------------------------
 
@@ -76,10 +75,15 @@ export const add = new Command()
           process.cwd(),
           targetPath
         )}`
-      )?.start();
-      const componentContent = fs.readFileSync(sourcePath, "utf-8");
-      fs.writeFileSync(targetPath, componentContent);
-      overwriteSpinner?.succeed();
+      ).start();
+
+      const data = await fsPromises.readFile(
+        path.join(options.source, `${component}.tsx`),
+        "utf-8"
+      );
+      await fsPromises.writeFile(targetPath, data);
+
+      overwriteSpinner.succeed();
       process.exit(1);
     }
 
